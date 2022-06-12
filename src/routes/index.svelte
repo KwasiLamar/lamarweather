@@ -1,5 +1,4 @@
 <script>
-	import './app.css';
 	import { goto } from '$app/navigation';
 	import axios from 'axios';
 	let searchTerm = '';
@@ -59,10 +58,6 @@
 		console.log(lat, long);
 	});
 </script>
-
-<svelte:head>
-	<title>Weather App</title>
-</svelte:head>
 
 <div class="wrapper">
 	<div class="search">

@@ -1,3 +1,11 @@
+<script>
+	import './app.css';
+</script>
+
+<svelte:head>
+	<title>Weather App</title>
+</svelte:head>
+
 <header>
 	<h1><a href="/">Pernell Weather</a></h1>
 </header>
