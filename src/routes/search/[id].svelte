@@ -26,8 +26,20 @@
 		});
 </script>
 
-{#each results as city}
+{#if results.length > 0}
+	<div class="results">
+		{#each results as city}
+			<div class="wrapper">
+				<a href="/weather/{$page.params.id}"><h1>{city.name}, {city.country}</h1></a>
+			</div>
+		{/each}
+	</div>
+{:else}
+	<h1 style="text-align: center; margin-top:2rem;">No Results Found</h1>
+{/if}
+<!-- {#each results as city}
+
 	<div class="wrapper">
 		<a href="/weather/{$page.params.id}"><h1>{city.name}, {city.country}</h1></a>
 	</div>
-{/each}
+{/each} -->

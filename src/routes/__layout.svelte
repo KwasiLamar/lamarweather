@@ -7,7 +7,7 @@
 </svelte:head>
 
 <header>
-	<h1><a href="/">Pernell Weather</a></h1>
+	<h1><a href="/">PinWeather</a></h1>
 </header>
 <slot />
 <footer>Copyright &copy; 2022 Pernell</footer>
