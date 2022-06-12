@@ -1,7 +1,63 @@
 <script>
 	import './app.css';
-	import sunny from '$lib/assets/sunny.png';
-	console.log(sunny);
+	import { goto } from '$app/navigation';
+	import axios from 'axios';
+	let searchTerm = '';
+	const searchCity = () => {
+		if (searchTerm !== '') {
+			goto('/search/' + searchTerm);
+		}
+	};
+	import { onMount } from 'svelte';
+	let lat = '';
+	let long = '';
+	let str = '';
+	let condition_text = '';
+	let temp_c;
+	let temp_f;
+	let icon;
+	// import sunny from '$lib/assets/sunny.png';
+
+	onMount(async () => {
+		function getLocation() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(showLocation);
+			} else {
+				console.log('Geolocation is not supported by this browser.');
+			}
+		}
+		function showLocation(position) {
+			lat = position.coords.latitude;
+			long = position.coords.longitude;
+			const options = {
+				method: 'GET',
+				url: 'https://weatherapi-com.p.rapidapi.com/current.json',
+				params: { q: `${lat.toString()},${long.toString()}` },
+				headers: {
+					'X-RapidAPI-Key': 'dacd056670msh28c9d460fd44004p166d2bjsn88910eb48745',
+					'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
+				}
+			};
+
+			axios
+				.request(options)
+				.then(function (response) {
+					console.log(response.data);
+					str = `${response.data.location.name}, ${response.data.location.country}`;
+					temp_c = response.data.current.temp_c;
+					temp_f = response.data.current.temp_f;
+					icon = response.data.current.condition.icon;
+					condition_text = response.data.current.condition.text;
+				})
+				.catch(function (error) {
+					console.error(error);
+				});
+			// console.log(lat, long);
+		}
+		getLocation();
+
+		console.log(lat, long);
+	});
 </script>
 
 <svelte:head>
@@ -10,71 +66,16 @@
 
 <div class="wrapper">
 	<div class="search">
-		<input type="text" placeholder="Search for a city..." />
-		<button>Search</button>
+		<input type="text" bind:value={searchTerm} placeholder="Search for a city..." />
+		<button on:click={searchCity}>Search</button>
 	</div>
 
-	<h1>Kumasi, Ghana</h1>
+	<h1>{str}</h1>
 	<h2>Today</h2>
-	<h3>23°C</h3>
-	<img
-		src="https://icons-for-free.com/iconfiles/png/512/sunny+weather+icon-1320196493554439865.png"
-		alt="Sunny"
-	/>
+	<h3>{temp_c}°C / {temp_f}°F</h3>
+	<h3>{condition_text}</h3>
+	<img src={`https://${icon}`} alt="Sunny" />
 </div>
 
 <style>
-	.wrapper {
-		margin: 2rem auto;
-		padding: 1rem;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		background-color: #333;
-		border-radius: 1rem;
-		width: 85%;
-		text-align: center;
-	}
-	.wrapper h1,
-	.wrapper h2,
-	.wrapper h3 {
-		margin-bottom: 1rem;
-	}
-
-	.search {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: center;
-		margin: 2rem;
-		width: 100%;
-	}
-
-	.search input {
-		border: 1px solid #333;
-		outline: none;
-		border-top-left-radius: 1rem;
-		border-bottom-left-radius: 1rem;
-		padding: 1rem;
-		font: 1rem 'Poppins', sans-serif;
-	}
-
-	.search button {
-		border: 1px solid #333;
-		outline: none;
-		border-top-right-radius: 1rem;
-		border-bottom-right-radius: 1rem;
-		padding: 1rem;
-		background-color: blue;
-		color: #fff;
-		font: 1rem 'Poppins', sans-serif;
-	}
-
-	img {
-		width: 150px;
-		height: auto;
-		-webkit-filter: invert(100%); /* Safari/Chrome */
-		filter: invert(100%);
-	}
 </style>
