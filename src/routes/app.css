@@ -105,7 +105,7 @@ footer {
 	text-align: center;
 }
 
-@media (max-width: 398px) {
+@media (max-width: 768px) {
 	.search {
 		display: flex;
 		flex-direction: column;
@@ -116,8 +116,10 @@ footer {
 	}
 
 	.search input {
+		display: block;
 		border-radius: 1rem;
 		margin-bottom: 1rem;
+		width: 100%;
 	}
 
 	.search button {
