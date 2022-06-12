@@ -2,6 +2,7 @@
 	import './app.css';
 	import sunny from '$lib/assets/sunny.png';
 	console.log(sunny);
+	print('HelloWOrld');
 </script>
 
 <svelte:head>
