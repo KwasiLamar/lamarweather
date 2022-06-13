@@ -65,11 +65,13 @@
 		<button on:click={searchCity}>Search</button>
 	</div>
 
-	<h1>{str}</h1>
-	<h2>Today</h2>
-	<h3>{temp_c}°C / {temp_f}°F</h3>
-	<h3>{condition_text}</h3>
-	<img src={`https://${icon}`} alt="Sunny" />
+	{#if temp_c !== undefined}
+		<h1>{str}</h1>
+		<h2>Today</h2>
+		<h3>{temp_c}°C / {temp_f}°F</h3>
+		<h3>{condition_text}</h3>
+		<img src={`https://${icon}`} alt="Sunny" />
+	{/if}
 </div>
 
 <style>
